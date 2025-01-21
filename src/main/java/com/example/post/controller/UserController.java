@@ -32,7 +32,7 @@ public class UserController {
 	}
 
 	// 회원가입 처리
-	@PostMapping("register_v3")
+	@PostMapping("register")
 	public String registerSuccess(@ModelAttribute User user) {
 		log.info("user: {}", user);
 		User registeredUser = userService.registerUser(user); // 서비스 레이어를 통해 사용자 등록
