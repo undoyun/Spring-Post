@@ -2,22 +2,20 @@ package com.example.post.repository;
 
 import java.util.List;
 
-import com.example.post.model.Post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 
-public interface PostRepository {
-   // 글 등록
-   void savePost(Post post);
-   
-   // 글 전체 조회
-   List<Post> findAllPosts();
-   
-   // 아이디로 글 조회
-   Post findPostById(Long postId);
-   
-   // 글 수정
-   void updatePost(Post updatePost);
-   
-   // 글 삭제
-   void removePost(Long postId);
+
+import com.example.post.model.posts.Post;
+
+public interface PostRepository extends JpaRepository<Post, Long> {
+    // 1. JPQL을 사용하는 방법
+    @Query("select p from Post p order by p.createTime desc")
+    List<Post> findAllPosts();
+
+    // 2. 쿼리 메소드를 사용하는 방법
+    Page<Post> findAllByOrderByCreateTimeDesc(Pageable pageable);
 }
